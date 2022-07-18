@@ -26,6 +26,10 @@ export class UserService {
     return this._users.find((user) => user.id === id && !user.isDeleted);
   }
 
+  findOneByLogin(login: string): User {
+    return this._users.find((user) => user.login === login && !user.isDeleted);
+  }
+
   update(id: string, updateUserDto: UpdateUserDto): User {
     const index = this._users.findIndex((user) => user.id === id);
     this._users[index] = new User(id, {
