@@ -1,0 +1,162 @@
+{
+	"info": {
+		"_postman_id": "4b312437-40e3-4b97-b2ae-4af403bc45c4",
+		"name": "NodeJS Short-track 2022",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "21577059"
+	},
+	"item": [
+		{
+			"name": "create",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{user}}",
+					"host": [
+						"{{user}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getAutoSuggestUsers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{user}}?loginSubstring=Va&limit=10",
+					"host": [
+						"{{user}}"
+					],
+					"query": [
+						{
+							"key": "loginSubstring",
+							"value": "Va"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getById",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{user}}/:id",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "af984858-8c35-46af-81d1-2dda944d10db"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"000000\",\r\n    \"age\": 3\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{user}}/:id",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "d84cd68c-b924-41f0-a64e-2f6551ea4b41"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "delete",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{user}}/:id",
+					"host": [
+						"{{user}}"
+					],
+					"path": [
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "74c51ac6-993b-49cf-b6bf-becb647cb819"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "user",
+			"value": "http://localhost:4000/v1/api/user",
+			"type": "string"
+		}
+	]
+}
