@@ -5,7 +5,7 @@ import { User } from './entities/user.entity';
 import { v4 } from 'uuid';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   private _users: User[] = [];
 
   create(createUserDto: CreateUserDto): User {

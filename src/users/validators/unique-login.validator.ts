@@ -6,12 +6,12 @@ import {
   registerDecorator,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { UserService } from '../user.service';
+import { UsersService } from '../users.service';
 
 @ValidatorConstraint({ name: 'LoginUnique' })
 @Injectable()
 export class IsLoginUniqueConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly userService: UserService) {}
+  constructor(private readonly userService: UsersService) {}
 
   validate(login: string, args: ValidationArguments) {
     return !this.userService.findOneByLogin(login);

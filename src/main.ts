@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 4000;
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
-  app.setGlobalPrefix('v1/api');
+  app.setGlobalPrefix('api/v1');
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT);
   console.log(`Application is running on: ${await app.getUrl()}`);
