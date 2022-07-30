@@ -13,7 +13,7 @@ export const dataSourceOptions = {
   synchronize: false,
   logging: false,
   entities: [User],
-  migrations: [],
+  migrations: ['./build/migrations/*.js'],
   subscribers: [],
 } as DataSourceOptions;
 
