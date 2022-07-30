@@ -15,6 +15,7 @@ export const dataSourceOptions = {
   entities: [User],
   migrations: ['./build/migrations/*.js'],
   subscribers: [],
+  migrationsTableName: process.env.DB_MIGRATIONS,
 } as DataSourceOptions;
 
 export const AppDataSource = new DataSource(dataSourceOptions);

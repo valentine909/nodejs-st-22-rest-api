@@ -9,11 +9,7 @@ npm install
 ```
 Rename `.env.example` to `.env`. Change the PORT or POSTGRES variables as needed.
 Make sure that postgres database is running (locally, in the docker container or in the cloud) and it's connection properties corresponds to that described in the `.env` file.
-### First run (Migration)
-Generate migration by running:
-```
-npm run migration:generate
-```
+### Before first run (Migration)
 Build the app:
 ```
 npm run build
