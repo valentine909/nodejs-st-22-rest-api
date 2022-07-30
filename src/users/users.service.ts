@@ -1,46 +1,54 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
-import { v4 } from 'uuid';
+import { Like, Repository } from 'typeorm';
 
 @Injectable()
 export class UsersService {
-  private _users: User[] = [];
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
 
-  create(createUserDto: CreateUserDto): User {
-    const id = v4();
-    const user = new User(id, createUserDto);
-    this._users.push(user);
-    return user;
+  async create(createUserDto: CreateUserDto): Promise<User> {
+    const user = await this.userRepository.create(createUserDto);
+    return await this.userRepository.save(user);
   }
 
-  getAutoSuggestUsers(loginSubstring: string, limit: number): User[] {
-    return this._users
-      .filter((user) => user.login.includes(loginSubstring) && !user.isDeleted)
-      .sort((a, b) => a.login.localeCompare(b.login))
-      .slice(0, limit);
-  }
-
-  findOne(id: string): User {
-    return this._users.find((user) => user.id === id && !user.isDeleted);
-  }
-
-  findOneByLogin(login: string): User {
-    return this._users.find((user) => user.login === login && !user.isDeleted);
-  }
-
-  update(id: string, updateUserDto: UpdateUserDto): User {
-    const index = this._users.findIndex((user) => user.id === id);
-    this._users[index] = new User(id, {
-      ...this._users[index],
-      ...updateUserDto,
+  async getAutoSuggestUsers(
+    loginSubstring: string,
+    limit: number,
+  ): Promise<User[]> {
+    return await this.userRepository.find({
+      take: limit,
+      where: { isDeleted: false, login: Like(`${loginSubstring}%`) },
+      order: { login: 'ASC' },
     });
-    return this._users[index];
   }
 
-  remove(id: string): void {
-    const user = this.findOne(id);
+  async findOne(id: string): Promise<User> {
+    return await this.userRepository.findOne({
+      where: { id, isDeleted: false },
+    });
+  }
+
+  async findOneByLogin(login: string): Promise<User> {
+    return await this.userRepository.findOne({ where: { login } });
+  }
+
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+    const user = await this.findOne(id);
+    return user
+      ? await this.userRepository.save(Object.assign(user, updateUserDto))
+      : user;
+  }
+
+  async remove(id: string): Promise<User> {
+    const user = await this.findOne(id);
+    if (!user) return user;
     user.isDeleted = true;
+    return await this.userRepository.save(user);
   }
 }

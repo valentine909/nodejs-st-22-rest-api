@@ -3,10 +3,13 @@ import { AppModule } from './app.module';
 import 'dotenv/config';
 import { ValidationPipe } from '@nestjs/common';
 import { useContainer } from 'class-validator';
+import { AppDataSource } from './data-source';
+import { User } from './users/entities/user.entity';
+import { userSeed } from './users/seed/user.seed';
 
 const PORT = process.env.PORT || 4000;
 
-async function bootstrap() {
+export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.setGlobalPrefix('api/v1');
@@ -15,4 +18,18 @@ async function bootstrap() {
   console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
-bootstrap().catch((error) => console.log(error));
+const seedDB = async () => {
+  const users = await AppDataSource.manager.find(User, { take: 1 });
+  if (users.length === 0) {
+    await AppDataSource.manager.save(
+      AppDataSource.manager.create(User, userSeed),
+    );
+  }
+};
+
+AppDataSource.initialize()
+  .then(async () => {
+    await seedDB();
+    bootstrap().catch((error) => console.log(error));
+  })
+  .catch((error) => console.log(error));
