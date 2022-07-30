@@ -1,7 +1,6 @@
 import {
   ValidatorConstraint,
   ValidatorConstraintInterface,
-  ValidationArguments,
   ValidationOptions,
   registerDecorator,
 } from 'class-validator';
@@ -13,11 +12,11 @@ import { UsersService } from '../users.service';
 export class IsLoginUniqueConstraint implements ValidatorConstraintInterface {
   constructor(private readonly userService: UsersService) {}
 
-  validate(login: string, args: ValidationArguments) {
-    return !this.userService.findOneByLogin(login);
+  async validate(login: string) {
+    return !(await this.userService.findOneByLogin(login));
   }
 
-  defaultMessage(args: ValidationArguments) {
+  defaultMessage() {
     return 'user ($value) is already registered';
   }
 }

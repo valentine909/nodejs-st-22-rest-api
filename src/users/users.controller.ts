@@ -9,45 +9,65 @@ import {
   Put,
   Query,
   ParseUUIDPipe,
+  HttpException,
+  HttpStatus,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { notFoundErrorMessage } from '../utils/messages';
+import { Routes } from '../utils/routes';
+import { Entities } from '../utils/entities';
 
-@Controller('users')
+@Controller(Routes.users)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
   @Post()
-  @HttpCode(201)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
+  @HttpCode(HttpStatus.CREATED)
+  async create(@Body() createUserDto: CreateUserDto) {
+    return await this.userService.create(createUserDto);
   }
 
   @Get()
-  getAutoSuggestUsers(
+  async getAutoSuggestUsers(
     @Query('loginSubstring') loginSubstring = '',
     @Query('limit') limit = 10,
   ) {
-    return this.userService.getAutoSuggestUsers(loginSubstring, limit);
+    return await this.userService.getAutoSuggestUsers(loginSubstring, limit);
   }
 
   @Get(':id')
-  findOne(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.userService.findOne(id);
+  async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
+    const user = await this.userService.findOne(id);
+    if (user) return user;
+    throw new HttpException(
+      notFoundErrorMessage(Entities.User, id),
+      HttpStatus.NOT_FOUND,
+    );
   }
 
   @Put(':id')
-  update(
+  async update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateUserDto: UpdateUserDto,
   ) {
-    return this.userService.update(id, updateUserDto);
+    const user = await this.userService.update(id, updateUserDto);
+    if (user) return user;
+    throw new HttpException(
+      notFoundErrorMessage(Entities.User, id),
+      HttpStatus.NOT_FOUND,
+    );
   }
 
   @Delete(':id')
-  @HttpCode(204)
-  remove(@Param('id', new ParseUUIDPipe()) id: string) {
-    return this.userService.remove(id);
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async remove(@Param('id', new ParseUUIDPipe()) id: string) {
+    const user = await this.userService.remove(id);
+    if (user) return;
+    throw new HttpException(
+      notFoundErrorMessage(Entities.User, id),
+      HttpStatus.NOT_FOUND,
+    );
   }
 }

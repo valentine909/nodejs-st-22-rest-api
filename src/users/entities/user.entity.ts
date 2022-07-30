@@ -1,17 +1,24 @@
-import { CreateUserDto } from '../dto/create-user.dto';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
+@Entity({ name: 'users' })
 export class User {
-  constructor(id: string, user: CreateUserDto, isDeleted = false) {
-    this.id = id;
-    this.login = user.login;
-    this.password = user.password;
-    this.age = user.age;
-    this.isDeleted = isDeleted;
-  }
-
+  @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column()
   login: string;
+
+  @Column()
   password: string;
+
+  @Column()
   age: number;
+
+  @Column({ default: false })
   isDeleted: boolean;
+
+  toResponse() {
+    const { id, login, password, age, isDeleted } = this;
+    return { id, login, password, age, isDeleted };
+  }
 }
