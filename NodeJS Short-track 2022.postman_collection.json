@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
+					"raw": "{\r\n    \"login\": \"Vaseuki\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -69,7 +69,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "af984858-8c35-46af-81d1-2dda944d10db"
+							"value": "2f516d76-9ba8-4193-bdb0-84c36aeb86b7"
 						}
 					]
 				}
@@ -83,7 +83,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"000000\",\r\n    \"age\": 3\r\n}",
+					"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"000000hhjn\",\r\n    \"age\": 53\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -101,7 +101,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "d84cd68c-b924-41f0-a64e-2f6551ea4b41"
+							"value": "2f516d76-9ba8-4193-bdb0-84c36aeb86b7"
 						}
 					]
 				}
@@ -124,7 +124,7 @@
 					"variable": [
 						{
 							"key": "id",
-							"value": "74c51ac6-993b-49cf-b6bf-becb647cb819"
+							"value": "2f516d76-9ba8-4193-bdb0-84c36aeb86b7"
 						}
 					]
 				}
