@@ -5,15 +5,15 @@ import {
   registerDecorator,
 } from 'class-validator';
 import { Injectable } from '@nestjs/common';
-import { UsersService } from '../users.service';
+import { UsersDataManager } from '../data-manager/users.data.manager';
 
 @ValidatorConstraint({ name: 'LoginUnique' })
 @Injectable()
 export class IsLoginUniqueConstraint implements ValidatorConstraintInterface {
-  constructor(private readonly userService: UsersService) {}
+  constructor(private readonly userDataManager: UsersDataManager) {}
 
   async validate(login: string) {
-    return !(await this.userService.findOneByLogin(login));
+    return !(await this.userDataManager.findByLogin(login));
   }
 
   defaultMessage() {

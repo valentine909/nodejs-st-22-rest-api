@@ -63,8 +63,8 @@ export class UsersController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', new ParseUUIDPipe()) id: string) {
-    const user = await this.userService.remove(id);
-    if (user) return;
+    const affected = await this.userService.delete(id);
+    if (affected) return;
     throw new HttpException(
       notFoundErrorMessage(Entities.User, id),
       HttpStatus.NOT_FOUND,
