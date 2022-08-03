@@ -15,31 +15,36 @@ export class UsersDataManager implements IUsersDataManager {
 
   async create(createUserDto: CreateUserDto): Promise<User> {
     const user = await this.userRepository.create(createUserDto);
-    return await this.userRepository.save(user);
+    return this.userRepository.save(user);
   }
 
   async findById(id: string): Promise<User> {
     return await this.userRepository.findOne({
-      where: { id, isDeleted: false },
+      where: { id },
     });
   }
 
   async findByLogin(login: string) {
-    return await this.userRepository.findOne({ where: { login } });
+    return this.userRepository.findOne({ where: { login }, withDeleted: true });
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
     return user
-      ? await this.userRepository.save(Object.assign(user, updateUserDto))
+      ? this.userRepository.save(Object.assign(user, updateUserDto))
       : user;
   }
 
   async findSuggested(limit: number, include: string): Promise<User[]> {
-    return await this.userRepository.find({
+    return this.userRepository.find({
       take: limit,
-      where: { isDeleted: false, login: Like(`${include}%`) },
+      where: { login: Like(`${include}%`) },
       order: { login: 'ASC' },
     });
+  }
+
+  async delete(id: string) {
+    const { affected } = await this.userRepository.softDelete(id);
+    return affected;
   }
 }

@@ -7,5 +7,5 @@ export interface DataManager {
 
   update(id: string, updateDto: any);
 
-  delete?(id: string);
+  delete(id: string);
 }

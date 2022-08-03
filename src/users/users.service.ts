@@ -16,7 +16,7 @@ export class UsersService {
     loginSubstring: string,
     limit: number,
   ): Promise<User[]> {
-    return await this.usersDataManager.findSuggested(limit, loginSubstring);
+    return this.usersDataManager.findSuggested(limit, loginSubstring);
   }
 
   async findOne(id: string): Promise<User> {
@@ -24,13 +24,10 @@ export class UsersService {
   }
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
-    return await this.usersDataManager.update(id, updateUserDto);
+    return this.usersDataManager.update(id, updateUserDto);
   }
 
-  async delete(id: string): Promise<User> {
-    const user = await this.usersDataManager.findById(id);
-    if (!user) return;
-    user.isDeleted = true;
-    return await this.update(id, user);
+  async delete(id: string): Promise<number> {
+    return this.usersDataManager.delete(id);
   }
 }

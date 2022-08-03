@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  DeleteDateColumn,
+} from 'typeorm';
+import { Exclude } from 'class-transformer';
 
 @Entity({ name: 'users' })
 export class User {
@@ -14,11 +20,7 @@ export class User {
   @Column()
   age: number;
 
-  @Column({ default: false })
-  isDeleted: boolean;
-
-  toResponse() {
-    const { id, login, password, age, isDeleted } = this;
-    return { id, login, password, age, isDeleted };
-  }
+  @Exclude()
+  @DeleteDateColumn({ nullable: true, default: null, select: false })
+  deleted_at: Date | null;
 }
