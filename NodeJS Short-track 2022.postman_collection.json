@@ -7,129 +7,230 @@
 	},
 	"item": [
 		{
-			"name": "create",
-			"request": {
-				"method": "POST",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"Vaseuki\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
-				"url": {
-					"raw": "{{user}}",
-					"host": [
-						"{{user}}"
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getAutoSuggestUsers",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{user}}?loginSubstring=Va&limit=10",
-					"host": [
-						"{{user}}"
-					],
-					"query": [
-						{
-							"key": "loginSubstring",
-							"value": "Va"
+			"name": "users",
+			"item": [
+				{
+					"name": "create",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Vaseuki2\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
 						},
-						{
-							"key": "limit",
-							"value": "10"
+						"url": {
+							"raw": "{{users}}",
+							"host": [
+								"{{users}}"
+							]
 						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "getById",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{user}}/:id",
-					"host": [
-						"{{user}}"
-					],
-					"path": [
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "2f516d76-9ba8-4193-bdb0-84c36aeb86b7"
-						}
-					]
-				}
-			},
-			"response": []
-		},
-		{
-			"name": "update",
-			"request": {
-				"method": "PUT",
-				"header": [],
-				"body": {
-					"mode": "raw",
-					"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"000000hhjn\",\r\n    \"age\": 53\r\n}",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
+					},
+					"response": []
 				},
-				"url": {
-					"raw": "{{user}}/:id",
-					"host": [
-						"{{user}}"
-					],
-					"path": [
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "2f516d76-9ba8-4193-bdb0-84c36aeb86b7"
+				{
+					"name": "getAutoSuggestUsers",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{users}}?loginSubstring=Va&limit=5",
+							"host": [
+								"{{users}}"
+							],
+							"query": [
+								{
+									"key": "loginSubstring",
+									"value": "Va"
+								},
+								{
+									"key": "limit",
+									"value": "5"
+								}
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "getById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{users}}/:id",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "c36bd709-f38c-4893-a12a-a7ce4c51c29e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Vaseuk\",\r\n    \"password\": \"000000hhjn\",\r\n    \"age\": 53\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{users}}/:id",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "c36bd709-f38c-4893-a12a-a7ce4c51c29e"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{users}}/{{id}}",
+							"host": [
+								"{{users}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "delete",
-			"request": {
-				"method": "DELETE",
-				"header": [],
-				"url": {
-					"raw": "{{user}}/:id",
-					"host": [
-						"{{user}}"
-					],
-					"path": [
-						":id"
-					],
-					"variable": [
-						{
-							"key": "id",
-							"value": "2f516d76-9ba8-4193-bdb0-84c36aeb86b7"
+			"name": "groups",
+			"item": [
+				{
+					"name": "create_group",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"admins\",\r\n    \"permissions\": [\"SHARE\"],\r\n    \"userIds\": [\"6d831864-1707-4c49-9db5-619a0fc2ec68\"]\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{groups}}",
+							"host": [
+								"{{groups}}"
+							]
 						}
-					]
+					},
+					"response": []
+				},
+				{
+					"name": "get_all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{groups}}",
+							"host": [
+								"{{groups}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete_group",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{groups}}/{{id}}",
+							"host": [
+								"{{groups}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get_one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{groups}}/{{id}}",
+							"host": [
+								"{{groups}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update_group",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userIds\": [\"c963b801-9bdd-4442-b994-19613f447a25\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{groups}}/{{id}}",
+							"host": [
+								"{{groups}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	],
 	"event": [
@@ -155,7 +256,7 @@
 	"variable": [
 		{
 			"key": "user",
-			"value": "http://localhost:4000/v1/api/user",
+			"value": "http://localhost:4000/v1/user",
 			"type": "string"
 		}
 	]
