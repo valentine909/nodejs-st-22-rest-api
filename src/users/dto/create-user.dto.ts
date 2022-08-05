@@ -8,6 +8,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { IsUnique } from '../validators/unique-login.validator';
+import { IsArray, IsOptional, IsUUID } from '@nestjs/class-validator';
 
 export class CreateUserDto {
   @IsString()
@@ -26,4 +27,9 @@ export class CreateUserDto {
   @Min(4)
   @Max(130)
   age: number;
+
+  @IsOptional()
+  @IsArray()
+  @IsUUID(4, { each: true })
+  groupIds: string[];
 }
