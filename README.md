@@ -24,10 +24,13 @@ Run the following command in the terminal:
 ```
 npm run start
 ```
-Application is accessible at the following endpoint by default:
+Application is accessible at the following endpoints by default:
 ```
 localhost:4000/api/v1/users
+localhost:4000/api/v1/groups
 ```
+You can use `NodeJS Short-track 2022.postman_collection.json` for convenient testing.
+
 ---
 ### TASK 4.1
 Add Group entity to already existing REST service with CRUD operations:
