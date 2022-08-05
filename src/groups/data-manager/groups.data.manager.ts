@@ -60,4 +60,15 @@ export class GroupsDataManager implements IGroupsDataManager {
     const { affected } = await this.groupRepository.delete(id);
     return affected;
   }
+
+  async addUsers(id: string, updateGroupDto: UpdateGroupDto) {
+    const group = await this.findById(id);
+    if (group) {
+      const addition = await this.usersDataManager.findByIds(
+        updateGroupDto.userIds,
+      );
+      group.users = group.users.concat(addition);
+    }
+    return group ? this.groupRepository.save(group) : group;
+  }
 }

@@ -27,4 +27,8 @@ export class GroupsService {
   async delete(id: string): Promise<number> {
     return this.groupDataManager.delete(id);
   }
+
+  async addUsers(id: string, updateGroupDto: UpdateGroupDto) {
+    return this.groupDataManager.addUsers(id, updateGroupDto);
+  }
 }

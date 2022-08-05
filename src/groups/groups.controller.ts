@@ -55,6 +55,19 @@ export class GroupsController {
     );
   }
 
+  @Post(':id')
+  async addUsers(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @Body() updateGroupDto: UpdateGroupDto,
+  ) {
+    const group = await this.groupsService.addUsers(id, updateGroupDto);
+    if (group) return group;
+    throw new HttpException(
+      notFoundErrorMessage(Entities.Group, id),
+      HttpStatus.NOT_FOUND,
+    );
+  }
+
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
