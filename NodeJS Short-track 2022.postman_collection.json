@@ -10,13 +10,13 @@
 			"name": "users",
 			"item": [
 				{
-					"name": "create",
+					"name": "create_user",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"login\": \"Vaseuki2\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
+							"raw": "{\r\n    \"login\": \"Vaseuki\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -57,7 +57,7 @@
 					"response": []
 				},
 				{
-					"name": "getById",
+					"name": "get_user_by_id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -80,7 +80,7 @@
 					"response": []
 				},
 				{
-					"name": "update",
+					"name": "update_user",
 					"request": {
 						"method": "PUT",
 						"header": [],
@@ -112,7 +112,7 @@
 					"response": []
 				},
 				{
-					"name": "delete",
+					"name": "delete_user",
 					"request": {
 						"method": "DELETE",
 						"header": [],
@@ -140,7 +140,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"admins\",\r\n    \"permissions\": [\"SHARE\"],\r\n    \"userIds\": [\"6d831864-1707-4c49-9db5-619a0fc2ec68\"]\r\n}\r\n",
+							"raw": "{\r\n    \"name\": \"admins\",\r\n    \"permissions\": [\"SHARE\"],\r\n    \"userIds\": [\"558227fa-c8d9-4c92-834d-8c8e6bce9451\"]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -157,7 +157,7 @@
 					"response": []
 				},
 				{
-					"name": "get_all",
+					"name": "get_all_groups",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -188,7 +188,7 @@
 					"response": []
 				},
 				{
-					"name": "get_one",
+					"name": "get_group_by_id",
 					"request": {
 						"method": "GET",
 						"header": [],
@@ -212,6 +212,32 @@
 						"body": {
 							"mode": "raw",
 							"raw": "{\r\n    \"userIds\": [\"c963b801-9bdd-4442-b994-19613f447a25\"]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{groups}}/{{id}}",
+							"host": [
+								"{{groups}}"
+							],
+							"path": [
+								"{{id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add_users",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"userIds\": [\"e93d725f-d7da-453a-abd3-52261c5eeb83\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
