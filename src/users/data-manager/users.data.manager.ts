@@ -14,8 +14,11 @@ export class UsersDataManager implements IUsersDataManager {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const user = await this.userRepository.create(createUserDto);
-    return this.userRepository.save(user);
+    const user = await this.userRepository.save(
+      this.userRepository.create(createUserDto),
+    );
+    delete user.deleted_at;
+    return user;
   }
 
   async findById(id: string): Promise<User> {
@@ -30,9 +33,14 @@ export class UsersDataManager implements IUsersDataManager {
 
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findById(id);
-    return user
-      ? this.userRepository.save(Object.assign(user, updateUserDto))
-      : user;
+    let updatedUser;
+    if (user) {
+      updatedUser = await this.userRepository.save(
+        Object.assign(user, updateUserDto),
+      );
+      delete updatedUser.deleted_at;
+    }
+    return updatedUser;
   }
 
   async findSuggested(limit: number, include: string): Promise<User[]> {

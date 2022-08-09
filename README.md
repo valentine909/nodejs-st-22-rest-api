@@ -28,7 +28,30 @@ Application is accessible at the following endpoint by default:
 ```
 localhost:4000/api/v1/users
 ```
-###TASK 3.1
+---
+### TASK 4.1
+Add Group entity to already existing REST service with CRUD operations:
+1. The Group entity should have the following properties (you can use UUID as Group id):
+2. The service should provide the following CRUD operations for Group:
+   - get group by id;
+   - get all groups;
+   - create and update a group;
+   - remove group (hard delete – group data is fully removed from the DB).
+3. Storing of groups data should be done in PostgreSQL in Groups table.
+4. The service should follow the principles of 3-layer architecture.
+
+### TASK 4.2
+Link User records in one table with Group records in another table.
+- Add a UserGroup table (“many-to-many” relationship) which will store the data describing
+which users are assigned to which group.
+- If any record gets removed from the DB, then all linked records should be removed from
+UserGroup as well.
+
+### TASK 4.3
+Add addUsersToGroup(groupId, userIds) method which will allow adding users to a certain group.
+Use transactions to save records in DB.
+
+### TASK 3.1
 1. Install DB PostgreSQL on your machine or use a free web hosting services for PostgreSQL
 (https://www.heroku.com/postgres or https://www.elephantsql.com/plans.html).
 2. Write SQL script which will create Users table in the DB and fill it in with predefined users’
@@ -39,8 +62,7 @@ PostgreSQL.
 As an alternative to sequelize you can use more low-level query-builder library
 ( http://knexjs.org/ ).
 
-###TASK 3.2
-
+### TASK 3.2
 The service should adhere to 3-layer architecture principles (https://softwareontheroad.com/ideal-
 nodejs-project-structure/) and contain the following set of directories:
 
