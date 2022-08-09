@@ -19,7 +19,7 @@ import { notFoundErrorMessage } from '../utils/messages';
 import { Routes } from '../utils/routes';
 import { Entities } from '../utils/entities';
 
-@Controller(Routes.users)
+@Controller(`v1/${Routes.users}`)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
