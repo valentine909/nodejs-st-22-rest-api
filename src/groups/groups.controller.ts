@@ -16,8 +16,9 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { notFoundErrorMessage } from '../utils/messages';
 import { Entities } from '../utils/entities';
+import { Routes } from '../utils/routes';
 
-@Controller('groups')
+@Controller(`v1/${Routes.groups}`)
 export class GroupsController {
   constructor(private readonly groupsService: GroupsService) {}
 
@@ -35,11 +36,13 @@ export class GroupsController {
   @Get(':id')
   async findOne(@Param('id', new ParseUUIDPipe({ version: '4' })) id: string) {
     const group = await this.groupsService.findOne(id);
-    if (group) return group;
-    throw new HttpException(
-      notFoundErrorMessage(Entities.Group, id),
-      HttpStatus.NOT_FOUND,
-    );
+    if (!group) {
+      throw new HttpException(
+        notFoundErrorMessage(Entities.Group, id),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return group;
   }
 
   @Put(':id')
@@ -48,11 +51,28 @@ export class GroupsController {
     @Body() updateGroupDto: UpdateGroupDto,
   ) {
     const group = await this.groupsService.update(id, updateGroupDto);
-    if (group) return group;
-    throw new HttpException(
-      notFoundErrorMessage(Entities.Group, id),
-      HttpStatus.NOT_FOUND,
-    );
+    if (!group) {
+      throw new HttpException(
+        notFoundErrorMessage(Entities.Group, id),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return group;
+  }
+
+  @Post(':id')
+  async addUsers(
+    @Param('id', new ParseUUIDPipe({ version: '4' })) id: string,
+    @Body() updateGroupDto: UpdateGroupDto,
+  ) {
+    const group = await this.groupsService.addUsers(id, updateGroupDto);
+    if (!group) {
+      throw new HttpException(
+        notFoundErrorMessage(Entities.Group, id),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return group;
   }
 
   @Delete(':id')

@@ -19,7 +19,7 @@ import { notFoundErrorMessage } from '../utils/messages';
 import { Routes } from '../utils/routes';
 import { Entities } from '../utils/entities';
 
-@Controller(Routes.users)
+@Controller(`v1/${Routes.users}`)
 export class UsersController {
   constructor(private readonly userService: UsersService) {}
 
@@ -40,11 +40,13 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id', new ParseUUIDPipe()) id: string) {
     const user = await this.userService.findOne(id);
-    if (user) return user;
-    throw new HttpException(
-      notFoundErrorMessage(Entities.User, id),
-      HttpStatus.NOT_FOUND,
-    );
+    if (!user) {
+      throw new HttpException(
+        notFoundErrorMessage(Entities.User, id),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return user;
   }
 
   @Put(':id')
@@ -53,11 +55,13 @@ export class UsersController {
     @Body() updateUserDto: UpdateUserDto,
   ) {
     const user = await this.userService.update(id, updateUserDto);
-    if (user) return user;
-    throw new HttpException(
-      notFoundErrorMessage(Entities.User, id),
-      HttpStatus.NOT_FOUND,
-    );
+    if (!user) {
+      throw new HttpException(
+        notFoundErrorMessage(Entities.User, id),
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return user;
   }
 
   @Delete(':id')
