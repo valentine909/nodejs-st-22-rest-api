@@ -15,7 +15,6 @@ export async function bootstrap() {
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT);
-  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 const seedDB = async () => {
@@ -30,6 +29,8 @@ const seedDB = async () => {
 AppDataSource.initialize()
   .then(async () => {
     await seedDB();
-    bootstrap().catch((error) => console.log(error));
+    bootstrap()
+      .then(() => console.log(`Application is running on port ${PORT}`))
+      .catch((error) => console.log(error));
   })
   .catch((error) => console.log(error));
