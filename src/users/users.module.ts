@@ -6,9 +6,14 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { UsersDataManager } from './data-manager/users.data.manager';
 import { GroupsModule } from '../groups/groups.module';
+import { AppModule } from '../app.module';
 
 @Module({
-  imports: [forwardRef(() => GroupsModule), TypeOrmModule.forFeature([User])],
+  imports: [
+    forwardRef(() => GroupsModule),
+    TypeOrmModule.forFeature([User]),
+    forwardRef(() => AppModule),
+  ],
   controllers: [UsersController],
   providers: [UsersService, IsLoginUniqueConstraint, UsersDataManager],
   exports: [UsersService, UsersDataManager],
