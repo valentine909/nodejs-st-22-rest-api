@@ -7,7 +7,7 @@ Run the following command in the terminal to install dependencies:
 ```
 npm install
 ```
-Rename `.env.example` to `.env`. Change the PORT or POSTGRES variables as needed.
+Rename `.env.example` to `.env`. Change the PORT and POSTGRES variables as needed.
 Make sure that postgres database is running (locally, in the docker container or in the cloud) and it's connection properties corresponds to that described in the `.env` file.
 ### Before first run (Migration)
 Build the app:
@@ -18,7 +18,7 @@ Apply migration:
 ```
 npm run migration:up
 ```
-NB! Postgres database must be running and set up correctly when migration is to be applied.
+**NB! Postgres database must be running and set up correctly when migration is to be applied.**
 ### Running an app
 Run the following command in the terminal:
 ```
@@ -32,14 +32,33 @@ localhost:4000/api/v1/groups
 You can use `NodeJS Short-track 2022.postman_collection.json` for convenient testing.
 
 ---
+### TASK 5.1
+ - Add express middleware which will log which service method has been invoked and which
+arguments have been passed to it.
+
+### TASK 5.2
+ - Add express middleware which will log all unhandled errors and return a standard message
+with HTTP code 500 (Internal Server Error).
+Remark: Do not modify the status code and the message for other errors like validation errors
+from the previous task.
+ - Add error handling to process.on(‘uncaughtException’, ...).
+ - Add Unhandled promise rejection listener to log errors.
+
+### TASK 5.3
+ - Every method in the controllers should log the errors which should include the following
+information:
+   - method name;
+   - arguments which have been passed to the method;
+   - error message.
+---
 ### TASK 4.1
 Add Group entity to already existing REST service with CRUD operations:
 1. The Group entity should have the following properties (you can use UUID as Group id):
 2. The service should provide the following CRUD operations for Group:
-   - get group by id;
-   - get all groups;
-   - create and update a group;
-   - remove group (hard delete – group data is fully removed from the DB).
+  - get group by id;
+  - get all groups;
+  - create and update a group;
+  - remove group (hard delete – group data is fully removed from the DB).
 3. Storing of groups data should be done in PostgreSQL in Groups table.
 4. The service should follow the principles of 3-layer architecture.
 
@@ -53,7 +72,7 @@ UserGroup as well.
 ### TASK 4.3
 Add addUsersToGroup(groupId, userIds) method which will allow adding users to a certain group.
 Use transactions to save records in DB.
-
+---
 ### TASK 3.1
 1. Install DB PostgreSQL on your machine or use a free web hosting services for PostgreSQL
 (https://www.heroku.com/postgres or https://www.elephantsql.com/plans.html).
