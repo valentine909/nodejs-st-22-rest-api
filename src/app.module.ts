@@ -5,7 +5,6 @@ import { dataSourceOptions } from './data-source';
 import { GroupsModule } from './groups/groups.module';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { LogInterceptor } from './log.interceptor';
-import { ServiceLogger } from './utils/service.logger';
 
 @Module({
   imports: [
@@ -18,8 +17,6 @@ import { ServiceLogger } from './utils/service.logger';
       provide: APP_INTERCEPTOR,
       useClass: LogInterceptor,
     },
-    ServiceLogger,
   ],
-  exports: [ServiceLogger],
 })
 export class AppModule {}
