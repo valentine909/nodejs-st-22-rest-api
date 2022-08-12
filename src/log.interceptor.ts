@@ -14,10 +14,10 @@ import {
 @Injectable()
 export class LogInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request = context['args'][0];
-    const path = request['route']['path'];
-    const method = request['method'];
-    const response = context['args'][1];
+    const request = context.switchToHttp().getRequest();
+    const path = request.routes.path;
+    const method = request.method;
+    const response = context.switchToHttp().getResponse();
     console.log(markMagenta(new Date().toUTCString()));
     console.log(`${markYellow('path:')} ${path}`);
     console.log(`${markYellow('method:')} ${method}`);
