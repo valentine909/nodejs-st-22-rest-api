@@ -15,7 +15,7 @@ import {
 export class LogInterceptor implements NestInterceptor {
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
     const request = context.switchToHttp().getRequest();
-    const path = request.routes.path;
+    const path = request.url;
     const method = request.method;
     const response = context.switchToHttp().getResponse();
     console.log(markMagenta(new Date().toUTCString()));
