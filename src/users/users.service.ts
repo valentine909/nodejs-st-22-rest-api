@@ -13,6 +13,11 @@ export class UsersService {
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    this.logger.log(
+      this.constructor.name,
+      this.create.name,
+      Array.from(arguments),
+    );
     return this.usersDataManager.create(createUserDto);
   }
 
