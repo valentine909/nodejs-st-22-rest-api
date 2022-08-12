@@ -9,6 +9,14 @@ import { userSeed } from './users/seed/user.seed';
 
 const PORT = process.env.PORT || 4000;
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err, origin) => {
+  console.log(err, origin);
+});
+
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
