@@ -1,9 +1,11 @@
+import { markYellow } from './for.console.log';
+
 export class ServiceLogger {
   log(service: string, method: string, args: any[]) {
     console.log(
-      `Service: ${service}, method: ${method}, arguments: ${JSON.stringify(
-        args,
-      )}`,
+      `${markYellow('Service:')} ${service}, ${markYellow(
+        'method:',
+      )} ${method}, ${markYellow('arguments:')} ${JSON.stringify(args)}`,
     );
   }
 }
