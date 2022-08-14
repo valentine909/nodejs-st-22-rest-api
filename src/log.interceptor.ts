@@ -5,11 +5,8 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import {
-  markMagenta,
-  markYellow,
-  simplifyObject,
-} from './utils/for.console.log';
+import { markMagenta, markYellow } from './utils/for.console.log';
+import { inspect } from 'util';
 
 @Injectable()
 export class LogInterceptor implements NestInterceptor {
@@ -21,8 +18,12 @@ export class LogInterceptor implements NestInterceptor {
     console.log(markMagenta(new Date().toUTCString()));
     console.log(`${markYellow('path:')} ${path}`);
     console.log(`${markYellow('method:')} ${method}`);
-    console.log(`${markYellow('request:')} ${simplifyObject(request)}`);
-    console.log(`${markYellow('response:')} ${simplifyObject(response)}`);
+    console.log(
+      `${markYellow('request:')} ${inspect(request, false, 1, true)}`,
+    );
+    console.log(
+      `${markYellow('response:')} ${inspect(response, false, 1, true)}`,
+    );
     return next.handle();
   }
 }
