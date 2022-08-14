@@ -3,7 +3,6 @@ import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
 import { GroupsDataManager } from './data-manager/groups.data.manager';
 import { Group } from './entities/group.entity';
-import { loggingWrapper } from '../utils/logging.wrapper';
 
 @Injectable()
 export class GroupsService {
@@ -33,5 +32,3 @@ export class GroupsService {
     return this.groupDataManager.addUsers(id, updateGroupDto);
   }
 }
-
-loggingWrapper(GroupsService.prototype);

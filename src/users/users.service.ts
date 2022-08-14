@@ -3,7 +3,6 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { User } from './entities/user.entity';
 import { UsersDataManager } from './data-manager/users.data.manager';
-import { loggingWrapper } from '../utils/logging.wrapper';
 
 @Injectable()
 export class UsersService {
@@ -32,5 +31,3 @@ export class UsersService {
     return this.usersDataManager.delete(id);
   }
 }
-
-loggingWrapper(UsersService.prototype);
