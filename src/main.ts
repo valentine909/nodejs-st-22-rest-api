@@ -9,13 +9,20 @@ import { userSeed } from './users/seed/user.seed';
 
 const PORT = process.env.PORT || 4000;
 
+process.on('unhandledRejection', (reason, promise) => {
+  console.log('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (err, origin) => {
+  console.log(err, origin);
+});
+
 export async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(PORT);
-  console.log(`Application is running on: ${await app.getUrl()}`);
 }
 
 const seedDB = async () => {
@@ -30,6 +37,8 @@ const seedDB = async () => {
 AppDataSource.initialize()
   .then(async () => {
     await seedDB();
-    bootstrap().catch((error) => console.log(error));
+    bootstrap()
+      .then(() => console.log(`Application is running on port ${PORT}`))
+      .catch((error) => console.log(error));
   })
   .catch((error) => console.log(error));
