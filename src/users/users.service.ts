@@ -23,6 +23,10 @@ export class UsersService {
     return this.usersDataManager.findById(id);
   }
 
+  async findByLogin(login: string, isDeleted: boolean): Promise<User> {
+    return this.usersDataManager.findByLogin(login, isDeleted);
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     return this.usersDataManager.update(id, updateUserDto);
   }

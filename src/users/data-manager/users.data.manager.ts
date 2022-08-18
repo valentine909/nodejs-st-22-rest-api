@@ -27,8 +27,11 @@ export class UsersDataManager implements IUsersDataManager {
     return this.userRepository.findBy({ id: In(ids) });
   }
 
-  async findByLogin(login: string) {
-    return this.userRepository.findOne({ where: { login }, withDeleted: true });
+  async findByLogin(login: string, isDeleted = true) {
+    return this.userRepository.findOne({
+      where: { login },
+      withDeleted: isDeleted,
+    });
   }
 
   async findSuggested(limit: number, include: string): Promise<User[]> {
