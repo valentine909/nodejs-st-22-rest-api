@@ -27,7 +27,7 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const message =
       exception instanceof HttpException
         ? exception.message
-        : ErrorMessage['500'];
+        : ErrorMessage.internalServerError;
 
     console.log(markYellow('Http errors logger:'), {
       method,

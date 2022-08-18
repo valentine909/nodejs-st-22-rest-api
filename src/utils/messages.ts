@@ -3,5 +3,7 @@ export const notFoundErrorMessage = (entity: string, id: string) => {
 };
 
 export const ErrorMessage = {
-  '500': 'Internal server error',
+  unauthorized: 'Unauthorized',
+  forbidden: 'Forbidden',
+  internalServerError: 'Internal server error',
 };

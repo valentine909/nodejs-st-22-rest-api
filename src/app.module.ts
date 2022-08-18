@@ -6,12 +6,14 @@ import { GroupsModule } from './groups/groups.module';
 import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LogInterceptor } from './log.interceptor';
 import { AllExceptionsFilter } from './utils/exceptions.filter';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     UsersModule,
     TypeOrmModule.forRoot(dataSourceOptions),
     GroupsModule,
+    AuthModule,
   ],
   providers: [
     {
