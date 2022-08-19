@@ -7,7 +7,7 @@ import { APP_FILTER, APP_INTERCEPTOR } from '@nestjs/core';
 import { LogInterceptor } from './utils/interceptors/log.interceptor';
 import { AllExceptionsFilter } from './utils/filters/exceptions.filter';
 import { AuthModule } from './auth/auth.module';
-
+import { ErrorLogInterceptor } from './utils/interceptors/error.log.interceptor';
 @Module({
   imports: [
     UsersModule,
@@ -21,8 +21,16 @@ import { AuthModule } from './auth/auth.module';
       useClass: LogInterceptor,
     },
     {
+      provide: APP_INTERCEPTOR,
+      useClass: ErrorLogInterceptor,
+    },
+    {
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard,
     },
     Logger,
   ],

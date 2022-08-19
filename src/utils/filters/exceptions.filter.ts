@@ -6,7 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { markYellow } from '../for.console.log';
 import { ErrorMessage } from '../error.messages';
 
 @Catch()
@@ -16,8 +15,6 @@ export class AllExceptionsFilter implements ExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost): void {
     const { httpAdapter } = this.httpAdapterHost;
     const ctx = host.switchToHttp();
-    const request = ctx.getRequest();
-    const { method, path, body, query } = request;
 
     const statusCode =
       exception instanceof HttpException
@@ -29,19 +26,17 @@ export class AllExceptionsFilter implements ExceptionFilter {
         ? exception.message
         : ErrorMessage.internalServerError;
 
-    console.log(markYellow('Http errors logger:'), {
-      method,
-      path,
-      arguments: {
-        body,
-        query,
-      },
-      message,
-    });
-    const responseBody = {
-      statusCode,
-      message,
-    };
+    const response =
+      exception instanceof HttpException && 'response' in exception
+        ? exception['response']
+        : '';
+
+    const responseBody = response
+      ? response
+      : {
+          statusCode,
+          message,
+        };
     httpAdapter.reply(ctx.getResponse(), responseBody, statusCode);
   }
 }
