@@ -1,7 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { LoginDto } from './dto/login.dto';
 import { UsersService } from '../users/users.service';
 import { JwtService } from '@nestjs/jwt';
+import { IncomingMessage } from 'http';
+import { ErrorMessage } from '../utils/error.messages';
 
 @Injectable()
 export class AuthService {
@@ -25,5 +27,24 @@ export class AuthService {
 
   async refresh(refreshToken: string) {
     console.log(refreshToken);
+  }
+
+  validateJWT(req: IncomingMessage): boolean {
+    const jwt = req.headers?.authorization?.split(' ')[1];
+    if (!jwt) {
+      throw new HttpException(
+        {
+          statusCode: HttpStatus.UNAUTHORIZED,
+          message: ErrorMessage.unauthorized,
+        },
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+    try {
+      this.jwtService.verify(jwt);
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

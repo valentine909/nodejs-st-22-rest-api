@@ -6,8 +6,15 @@ import { JwtModule } from '@nestjs/jwt';
 import 'dotenv/config';
 
 @Module({
-  imports: [UsersModule, JwtModule.register({ secret: process.env.SECRET })],
+  imports: [
+    UsersModule,
+    JwtModule.register({
+      secret: process.env.SECRET,
+      signOptions: { expiresIn: parseInt(process.env.EXPIRE, 10) },
+    }),
+  ],
   controllers: [AuthController],
   providers: [AuthService],
+  exports: [AuthService],
 })
 export class AuthModule {}

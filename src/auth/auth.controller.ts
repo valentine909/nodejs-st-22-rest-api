@@ -10,11 +10,13 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { Routes } from '../utils/constants/routes';
 import { ErrorMessage } from '../utils/error.messages';
+import { AllowUnauthorizedRequest } from '../utils/guards/access.decorator';
 
 @Controller(`v1/${Routes.auth}`)
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
+  @AllowUnauthorizedRequest()
   @Post(Routes.login)
   async login(@Body() loginDto: LoginDto) {
     const token = await this.authService.login(loginDto);

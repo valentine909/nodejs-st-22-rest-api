@@ -18,6 +18,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { notFoundErrorMessage } from '../utils/error.messages';
 import { Routes } from '../utils/constants/routes';
 import { Entities } from '../utils/constants/entities';
+import { AllowUnauthorizedRequest } from '../utils/guards/access.decorator';
 
 @Controller(`v1/${Routes.users}`)
 export class UsersController {
@@ -25,6 +26,7 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @AllowUnauthorizedRequest()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
