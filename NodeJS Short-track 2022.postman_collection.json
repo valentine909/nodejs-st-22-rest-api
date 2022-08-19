@@ -12,11 +12,14 @@
 				{
 					"name": "create_user",
 					"request": {
+						"auth": {
+							"type": "noauth"
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"login\": \"Vaseuki\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
+							"raw": "{\r\n    \"login\": \"Vaseuki11\",\r\n    \"password\": \"123456789a\",\r\n    \"age\": 25\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -62,18 +65,12 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{users}}/:id",
+							"raw": "{{users}}/{{id}}",
 							"host": [
 								"{{users}}"
 							],
 							"path": [
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c36bd709-f38c-4893-a12a-a7ce4c51c29e"
-								}
+								"{{id}}"
 							]
 						}
 					},
@@ -94,18 +91,12 @@
 							}
 						},
 						"url": {
-							"raw": "{{users}}/:id",
+							"raw": "{{users}}/{{id}}",
 							"host": [
 								"{{users}}"
 							],
 							"path": [
-								":id"
-							],
-							"variable": [
-								{
-									"key": "id",
-									"value": "c36bd709-f38c-4893-a12a-a7ce4c51c29e"
-								}
+								"{{id}}"
 							]
 						}
 					},
@@ -140,7 +131,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"admins\",\r\n    \"permissions\": [\"SHARE\"],\r\n    \"userIds\": [\"558227fa-c8d9-4c92-834d-8c8e6bce9451\"]\r\n}\r\n",
+							"raw": "{\r\n    \"name\": \"admins\",\r\n    \"permissions\": [\"SHARE\"]\r\n}\r\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -257,8 +248,52 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "auth",
+			"item": [
+				{
+					"name": "login",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Vaseuki\",\r\n    \"password\": \"123456789a\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{auth}}/login",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
 		}
 	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{token}}",
+				"type": "string"
+			}
+		]
+	},
 	"event": [
 		{
 			"listen": "prerequest",
@@ -277,13 +312,6 @@
 					""
 				]
 			}
-		}
-	],
-	"variable": [
-		{
-			"key": "user",
-			"value": "http://localhost:4000/v1/user",
-			"type": "string"
 		}
 	]
 }
