@@ -28,6 +28,9 @@ export class User {
   @DeleteDateColumn({ nullable: true, default: null, select: false })
   deleted_at: Date | null;
 
+  @Column({ nullable: true })
+  refresh: string;
+
   @IsOptional()
   @IsArray()
   groupIds: string[];

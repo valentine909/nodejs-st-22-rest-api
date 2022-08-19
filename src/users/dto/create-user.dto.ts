@@ -29,6 +29,9 @@ export class CreateUserDto {
   age: number;
 
   @IsOptional()
+  refresh: string;
+
+  @IsOptional()
   @IsArray()
   @IsUUID(4, { each: true })
   groupIds: string[];

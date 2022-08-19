@@ -5,6 +5,7 @@ import {
   Headers,
   HttpException,
   HttpStatus,
+  Get,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -19,18 +20,26 @@ export class AuthController {
   @AllowUnauthorizedRequest()
   @Post(Routes.login)
   async login(@Body() loginDto: LoginDto) {
-    const token = await this.authService.login(loginDto);
+    const tokens = await this.authService.login(loginDto);
+    if (!tokens) {
+      throw new HttpException(
+        ErrorMessage.unauthorized,
+        HttpStatus.UNAUTHORIZED,
+      );
+    }
+    return tokens;
+  }
+
+  @Get(Routes.refresh)
+  refresh(@Headers('refresh') refreshToken: string) {
+    const token = this.authService.refresh(refreshToken);
+    console.log(token);
     if (!token) {
       throw new HttpException(
         ErrorMessage.unauthorized,
         HttpStatus.UNAUTHORIZED,
       );
     }
-    return { token };
-  }
-
-  @Post(Routes.refresh)
-  refresh(@Headers('refresh') refreshToken: string) {
-    return this.authService.refresh(refreshToken);
+    return token;
   }
 }
