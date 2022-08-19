@@ -42,7 +42,10 @@ export class UsersController {
     const user = await this.userService.findOne(id);
     if (!user) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.User, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.User, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -57,7 +60,10 @@ export class UsersController {
     const user = await this.userService.update(id, updateUserDto);
     if (!user) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.User, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.User, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -70,7 +76,10 @@ export class UsersController {
     const affected = await this.userService.delete(id);
     if (affected) return;
     throw new HttpException(
-      notFoundErrorMessage(Entities.User, id),
+      {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: notFoundErrorMessage(Entities.User, id),
+      },
       HttpStatus.NOT_FOUND,
     );
   }

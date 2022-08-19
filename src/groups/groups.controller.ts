@@ -38,7 +38,10 @@ export class GroupsController {
     const group = await this.groupsService.findOne(id);
     if (!group) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.Group, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.Group, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -53,7 +56,10 @@ export class GroupsController {
     const group = await this.groupsService.update(id, updateGroupDto);
     if (!group) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.Group, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.Group, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -68,7 +74,10 @@ export class GroupsController {
     const group = await this.groupsService.addUsers(id, updateGroupDto);
     if (!group) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.Group, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.Group, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -81,7 +90,10 @@ export class GroupsController {
     const affected = await this.groupsService.delete(id);
     if (affected) return;
     throw new HttpException(
-      notFoundErrorMessage(Entities.Group, id),
+      {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: notFoundErrorMessage(Entities.Group, id),
+      },
       HttpStatus.NOT_FOUND,
     );
   }
