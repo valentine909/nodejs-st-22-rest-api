@@ -8,8 +8,8 @@ import {
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
-import { Routes } from '../utils/routes';
-import { ErrorMessage } from '../utils/messages';
+import { Routes } from '../utils/constants/routes';
+import { ErrorMessage } from '../utils/error.messages';
 
 @Controller(`v1/${Routes.auth}`)
 export class AuthController {

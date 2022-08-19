@@ -15,9 +15,9 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { notFoundErrorMessage } from '../utils/messages';
-import { Routes } from '../utils/routes';
-import { Entities } from '../utils/entities';
+import { notFoundErrorMessage } from '../utils/error.messages';
+import { Routes } from '../utils/constants/routes';
+import { Entities } from '../utils/constants/entities';
 
 @Controller(`v1/${Routes.users}`)
 export class UsersController {

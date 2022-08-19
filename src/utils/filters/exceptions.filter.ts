@@ -6,8 +6,8 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { HttpAdapterHost } from '@nestjs/core';
-import { markYellow } from './for.console.log';
-import { ErrorMessage } from './messages';
+import { markYellow } from '../for.console.log';
+import { ErrorMessage } from '../error.messages';
 
 @Catch()
 export class AllExceptionsFilter implements ExceptionFilter {

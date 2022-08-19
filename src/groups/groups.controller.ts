@@ -14,9 +14,9 @@ import {
 import { GroupsService } from './groups.service';
 import { CreateGroupDto } from './dto/create-group.dto';
 import { UpdateGroupDto } from './dto/update-group.dto';
-import { notFoundErrorMessage } from '../utils/messages';
-import { Entities } from '../utils/entities';
-import { Routes } from '../utils/routes';
+import { notFoundErrorMessage } from '../utils/error.messages';
+import { Entities } from '../utils/constants/entities';
+import { Routes } from '../utils/constants/routes';
 
 @Controller(`v1/${Routes.groups}`)
 export class GroupsController {

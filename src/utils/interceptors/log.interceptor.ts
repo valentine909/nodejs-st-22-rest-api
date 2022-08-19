@@ -6,7 +6,7 @@ import {
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
-import { markGreen, markMagenta, markYellow } from './utils/for.console.log';
+import { markGreen, markMagenta, markYellow } from '../for.console.log';
 import { inspect } from 'util';
 
 @Injectable()

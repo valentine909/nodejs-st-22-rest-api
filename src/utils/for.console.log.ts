@@ -1,4 +1,4 @@
-import { Color } from './colors';
+import { Color } from './constants/colors';
 
 export const markYellow = (text: string) => {
   return `${Color.FgYellow}${text}${Color.Reset}`;
