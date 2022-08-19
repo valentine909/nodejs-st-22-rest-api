@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { dataSourceOptions } from './data-source';
@@ -24,6 +24,7 @@ import { AuthModule } from './auth/auth.module';
       provide: APP_FILTER,
       useClass: AllExceptionsFilter,
     },
+    Logger,
   ],
 })
 export class AppModule {}

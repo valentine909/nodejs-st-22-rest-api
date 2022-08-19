@@ -2,29 +2,48 @@ import {
   CallHandler,
   ExecutionContext,
   Injectable,
+  Logger,
   NestInterceptor,
 } from '@nestjs/common';
 import { Observable, tap } from 'rxjs';
-import { markMagenta, markYellow } from './utils/for.console.log';
+import { markGreen, markMagenta, markYellow } from './utils/for.console.log';
 import { inspect } from 'util';
 
 @Injectable()
 export class LogInterceptor implements NestInterceptor {
+  constructor(private readonly logger: Logger) {}
   intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
-    const request = context.switchToHttp().getRequest();
-    const path = request.url;
-    const method = request.method;
-    const response = context.switchToHttp().getResponse();
     return next.handle().pipe(
       tap(() => {
-        console.log(markMagenta(new Date().toUTCString()));
-        console.log(`${markYellow('path:')} ${path}`);
-        console.log(`${markYellow('method:')} ${method}`);
-        console.log(
-          `${markYellow('request:')} ${inspect(request, false, 1, true)}`,
+        const request = context.switchToHttp().getRequest();
+        const path = request._parsedUrl?.pathname || request.url;
+        const method = request.method;
+        const service = context.getClass().name;
+        const handler = context.getHandler().name;
+        const response = context.switchToHttp().getResponse();
+        const inspectOptions = {
+          compact: true,
+          breakLength: Infinity,
+          colors: true,
+          depth: 1,
+          showHidden: false,
+        };
+        this.logger.log(
+          `${markYellow('[Time]')} ${markMagenta(new Date().toUTCString())}`,
         );
-        console.log(
-          `${markYellow('response:')} ${inspect(response, false, 1, true)}`,
+        this.logger.log(`${markYellow('[Path]')} ${markGreen(path)}`);
+        this.logger.log(`${markYellow('[Method]')} ${markGreen(method)}`);
+        this.logger.log(`${markYellow('[Service]')} ${markGreen(service)}`);
+        this.logger.log(`${markYellow('[Handler]')} ${markGreen(handler)}`);
+        this.logger.log(
+          `${markMagenta('[Request]')} ${inspect(request, {
+            ...inspectOptions,
+          })}`,
+        );
+        this.logger.log(
+          `${markMagenta('[Response]')} ${inspect(response, {
+            ...inspectOptions,
+          })}`,
         );
       }),
     );

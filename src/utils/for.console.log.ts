@@ -7,3 +7,7 @@ export const markYellow = (text: string) => {
 export const markMagenta = (text: string) => {
   return `${Color.FgMagenta}${text}${Color.Reset}`;
 };
+
+export const markGreen = (text: string) => {
+  return `${Color.FgGreen}${text}${Color.Reset}`;
+};
