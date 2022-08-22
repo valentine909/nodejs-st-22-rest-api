@@ -22,6 +22,7 @@ export async function bootstrap() {
   useContainer(app.select(AppModule), { fallbackOnErrors: true });
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
   await app.listen(PORT);
 }
 

@@ -15,9 +15,10 @@ import {
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { notFoundErrorMessage } from '../utils/messages';
-import { Routes } from '../utils/routes';
-import { Entities } from '../utils/entities';
+import { notFoundErrorMessage } from '../utils/error.messages';
+import { Routes } from '../utils/constants/routes';
+import { Entities } from '../utils/constants/entities';
+import { AllowUnauthorizedRequest } from '../utils/guards/access.decorator';
 
 @Controller(`v1/${Routes.users}`)
 export class UsersController {
@@ -25,6 +26,7 @@ export class UsersController {
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
+  @AllowUnauthorizedRequest()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.userService.create(createUserDto);
   }
@@ -42,7 +44,10 @@ export class UsersController {
     const user = await this.userService.findOne(id);
     if (!user) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.User, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.User, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -57,7 +62,10 @@ export class UsersController {
     const user = await this.userService.update(id, updateUserDto);
     if (!user) {
       throw new HttpException(
-        notFoundErrorMessage(Entities.User, id),
+        {
+          statusCode: HttpStatus.NOT_FOUND,
+          message: notFoundErrorMessage(Entities.User, id),
+        },
         HttpStatus.NOT_FOUND,
       );
     }
@@ -70,7 +78,10 @@ export class UsersController {
     const affected = await this.userService.delete(id);
     if (affected) return;
     throw new HttpException(
-      notFoundErrorMessage(Entities.User, id),
+      {
+        statusCode: HttpStatus.NOT_FOUND,
+        message: notFoundErrorMessage(Entities.User, id),
+      },
       HttpStatus.NOT_FOUND,
     );
   }
