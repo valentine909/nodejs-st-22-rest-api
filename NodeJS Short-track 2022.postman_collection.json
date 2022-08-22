@@ -280,6 +280,29 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "refresh",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "refresh",
+								"value": "{{refresh}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{auth}}/refresh",
+							"host": [
+								"{{auth}}"
+							],
+							"path": [
+								"refresh"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
