@@ -20,16 +20,17 @@ export class AuthController {
   @AllowUnauthorizedRequest()
   @Post(Routes.login)
   async login(@Body() loginDto: LoginDto) {
-    const { access_token, refresh_token } = await this.authService.login(
-      loginDto,
-    );
-    if (!access_token || !refresh_token) {
+    const tokens = await this.authService.login(loginDto);
+    if (!tokens) {
       throw new HttpException(
-        ErrorMessage.unauthorized,
+        {
+          message: ErrorMessage.unauthorized,
+          statusCode: HttpStatus.UNAUTHORIZED,
+        },
         HttpStatus.UNAUTHORIZED,
       );
     }
-    return { access_token, refresh_token };
+    return tokens;
   }
 
   @AllowUnauthorizedRequest()
@@ -38,7 +39,10 @@ export class AuthController {
     const access_token = await this.authService.refresh(refreshToken);
     if (!access_token) {
       throw new HttpException(
-        ErrorMessage.unauthorized,
+        {
+          message: ErrorMessage.unauthorized,
+          statusCode: HttpStatus.UNAUTHORIZED,
+        },
         HttpStatus.UNAUTHORIZED,
       );
     }

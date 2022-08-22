@@ -22,7 +22,10 @@ export class AuthService {
     const user = await this.usersService.findByLogin(login, false);
     let access_token;
     let refresh_token;
-    if (user && user.password === password) {
+    if (
+      user &&
+      (await this.usersService.verifyPassword(password, user.password))
+    ) {
       access_token = this.generateJWT(user);
       refresh_token = this.generateJWT(user, {
         expiresIn: parseInt(process.env.REFRESH, 10),
