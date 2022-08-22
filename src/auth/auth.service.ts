@@ -5,6 +5,8 @@ import { JwtService } from '@nestjs/jwt';
 import { IncomingMessage } from 'http';
 import { ErrorMessage } from '../utils/error.messages';
 import 'dotenv/config';
+import { User } from '../users/entities/user.entity';
+import { JwtSignOptions } from '@nestjs/jwt/dist/interfaces';
 
 @Injectable()
 export class AuthService {
@@ -13,25 +15,18 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async login(loginDto: LoginDto): Promise<object> {
+  async login(
+    loginDto: LoginDto,
+  ): Promise<{ access_token: string; refresh_token: string }> {
     const { login, password } = loginDto;
     const user = await this.usersService.findByLogin(login, false);
     let access_token;
     let refresh_token;
     if (user && user.password === password) {
-      access_token = this.jwtService.sign({
-        id: user.id,
-        name: user.login,
-        iat: Date.now(),
+      access_token = this.generateJWT(user);
+      refresh_token = this.generateJWT(user, {
+        expiresIn: parseInt(process.env.REFRESH, 10),
       });
-      refresh_token = this.jwtService.sign(
-        {
-          id: user.id,
-          name: user.login,
-          iat: Date.now(),
-        },
-        { expiresIn: parseInt(process.env.REFRESH, 10) },
-      );
       await this.usersService.update(user.id, { refresh: refresh_token });
     } else {
       return null;
@@ -43,11 +38,7 @@ export class AuthService {
     const payload = this.jwtService.verify(refreshToken);
     const user = await this.usersService.findOne(payload.id);
     if (user.refresh === refreshToken) {
-      const access_token = this.jwtService.sign({
-        id: user.id,
-        iat: Date.now(),
-      });
-      return { access_token };
+      return this.generateJWT(user);
     }
     return null;
   }
@@ -69,5 +60,16 @@ export class AuthService {
     } catch (e) {
       return false;
     }
+  }
+
+  generateJWT(user: User, options?: JwtSignOptions) {
+    return this.jwtService.sign(
+      {
+        id: user.id,
+        name: user.login,
+        iat: Math.floor(Date.now() / 1000),
+      },
+      options,
+    );
   }
 }
