@@ -21,11 +21,13 @@ export class AuthService {
     if (user && user.password === password) {
       access_token = this.jwtService.sign({
         id: user.id,
+        name: user.login,
         iat: Date.now(),
       });
       refresh_token = this.jwtService.sign(
         {
           id: user.id,
+          name: user.login,
           iat: Date.now(),
         },
         { expiresIn: parseInt(process.env.REFRESH, 10) },
